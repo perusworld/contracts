@@ -10,3 +10,6 @@ build
 cache
 artifacts
 arguments.js
+
+scripts/*.json
+go/*.json

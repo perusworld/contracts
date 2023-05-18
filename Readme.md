@@ -30,3 +30,16 @@ ERC20 examples with airdrop use case, not restricted
 |:------------------:|:------------------------------------------:|:-----------------------------------------:|
 |   **Validators**   |0x9ee6a2682Caa2E0AC99dA46afb88Ad7e6A58Cd1b  |0x5f24dD9FbEa358B9dD96daA281e82160fdefD3CD |
 | **ERC20 examples** |0x7C14Aa764130852A8B64BA7058bf71E4292d677F  |0xa3Bc012FCf034bee8d16161730CE4eAb34C35100 |
+
+
+## Dev
+```bash
+cd go
+go mod tidy
+go run src/main.go
+cd ..
+npm run deploy:localhost:core
+npm run deploy:localhost:mtp
+npm run deploy:localhost:sig
+npm run deploy:localhost:erc20
+```
