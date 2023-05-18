@@ -1,7 +1,7 @@
 import { ethers, upgrades } from "hardhat";
 import { Contract } from "ethers";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { deployPoseidons } from "../utils/deploy-poseidons.util";
+import { deployPoseidons, deploySpongePoseidon } from "../utils/deploy-poseidons.util";
 
 const SMT_MAX_DEPTH = 64;
 
@@ -32,6 +32,10 @@ export class StateDeployHelper {
     poseidon1: Contract;
     poseidon2: Contract;
     poseidon3: Contract;
+    poseidon4: Contract;
+    poseidon5: Contract;
+    poseidon6: Contract;
+    spongePoseidon: Contract;
   }> {
     this.log("======== StateV2: deploy started ========");
 
@@ -47,9 +51,10 @@ export class StateDeployHelper {
     );
 
     this.log("deploying poseidons...");
-    const [poseidon1Elements, poseidon2Elements, poseidon3Elements] = await deployPoseidons(
+    const [poseidon1Elements, poseidon2Elements, poseidon3Elements, poseidon4Elements, poseidon5Elements, poseidon6Elements] = 
+    await deployPoseidons(
         owner,
-        [1, 2, 3]
+        [1, 2, 3, 4, 5, 6]
     );
 
     this.log("deploying SmtLib...");
@@ -57,6 +62,10 @@ export class StateDeployHelper {
 
     this.log("deploying StateLib...");
     const stateLib = await this.deployStateLib();
+    
+
+    this.log("deploying SpongePoseidon...");
+    const spongePoseidon = await deploySpongePoseidon(poseidon6Elements.address);
 
     this.log("deploying stateV2...");
     const StateV2Factory = await ethers.getContractFactory("StateV2", {
@@ -82,6 +91,10 @@ export class StateDeployHelper {
       poseidon1: poseidon1Elements,
       poseidon2: poseidon2Elements,
       poseidon3: poseidon3Elements,
+      poseidon4: poseidon4Elements,
+      poseidon5: poseidon5Elements,
+      poseidon6: poseidon6Elements,
+      spongePoseidon
     };
   }
 
